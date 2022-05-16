@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+### Database ###
+
+school.mv.db
+school.trace.db
