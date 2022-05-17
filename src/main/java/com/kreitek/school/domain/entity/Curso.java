@@ -1,6 +1,9 @@
 package com.kreitek.school.domain.entity;
 
+import com.kreitek.school.application.dto.AlumnoDto;
+
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -10,7 +13,7 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "school_sequence")
     @SequenceGenerator(name = "school_sequence")
-    private long id;
+    private Long id;
 
     @Column(name = "NOMBRE", nullable = false, length = 200)
     private String nombre;
@@ -20,6 +23,8 @@ public class Curso {
 
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
     Set<Leccion> lecciones;
+    @ManyToMany(mappedBy = "cursos")
+    private Set<Alumno> alumnos;
 
     public long getId() {
         return id;
@@ -52,5 +57,21 @@ public class Curso {
     public void setLecciones(Set<Leccion> lecciones) {
         this.lecciones = lecciones;
         this.lecciones.forEach(leccion -> leccion.setCurso(this));
+    }
+
+    public Set<Alumno> getAlumnos() {
+        return alumnos;
+    }
+
+    public void setAlumnos(Set<Alumno> alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass() || id == null) return false;
+        Curso o = (Curso) obj;
+        return id.equals(o.id);
     }
 }

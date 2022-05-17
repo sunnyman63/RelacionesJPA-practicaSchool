@@ -14,6 +14,8 @@ public class LeccionDto implements Serializable {
     private Long profesorId;
     private String profesorNombre;
 
+    public LeccionDto() {}
+
     public long getId() {
         return id;
     }
