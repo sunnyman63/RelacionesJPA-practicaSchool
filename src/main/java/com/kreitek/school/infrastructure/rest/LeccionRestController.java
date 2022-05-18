@@ -1,5 +1,6 @@
 package com.kreitek.school.infrastructure.rest;
 
+import com.kreitek.school.application.dto.AdjuntoDto;
 import com.kreitek.school.application.dto.LeccionDto;
 import com.kreitek.school.application.service.LeccionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,13 @@ public class LeccionRestController {
     public ResponseEntity<LeccionDto> crearLeccionEnCurso(@PathVariable Long cursoId, @RequestBody LeccionDto leccionDto) {
         leccionDto = leccionService.crearLeccion(cursoId, leccionDto);
         return new ResponseEntity<>(leccionDto,HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "lecciones/{leccionId}/adjuntos", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<List<AdjuntoDto>> anyadirAdjuntoEnLeccion(@PathVariable Long cursoId,
+                                                                    @PathVariable Long leccionId,
+                                                                    @RequestBody AdjuntoDto adjuntoDto) {
+        List<AdjuntoDto> adjuntoDtos = leccionService.adjuntoFichero(cursoId, leccionId, adjuntoDto);
+        return new ResponseEntity<>(adjuntoDtos, HttpStatus.OK);
     }
 }
